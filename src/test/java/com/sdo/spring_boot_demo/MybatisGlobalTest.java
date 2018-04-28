@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sdo.entity.ResmsEntity;
 import com.sdo.mapper.global.ResmsMapper;
@@ -37,19 +38,20 @@ public class MybatisGlobalTest {
 	}
 
 	@Test
+	@Transactional 
 	public void testInsert() throws Exception {
 		ResmsEntity resms = new ResmsEntity();
 		resms.setResmsNumber(10690079);
 		resms.setTelecomName("中国微信");
 		resms.setTelecom("10001");
 		resms.setTelecomStatus(1);
-		try {
-			resmsMapper.insert(resms);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
-		}
-		Assert.assertTrue(true);
+		resmsMapper.insert(resms);
+		resms.setResmsNumber(10690079);
+		resms.setTelecomName("中国X信");
+		resms.setTelecom("100011");
+		resms.setTelecomStatus(1);
+		resmsMapper.insert(resms);
+//		Assert.assertTrue(true);
 
 	}
 	

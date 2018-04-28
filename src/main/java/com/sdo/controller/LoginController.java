@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,5 +42,24 @@ public class LoginController {
 		return "success";
 		
     }
+	@RequestMapping(value="/insert", method={ RequestMethod.GET,RequestMethod.POST })
+	@Transactional
+	public String insert() {
+		ResmsEntity resms = new ResmsEntity();
+		resms.setResmsNumber(10690079);
+		resms.setTelecomName("中国微信");
+		resms.setTelecom("10001");
+		resms.setTelecomStatus(1);
+		resmsMapper.insert(resms);
+		resms.setResmsNumber(10690079);
+		resms.setTelecomName("中国X信");
+		resms.setTelecom("100011");
+		resms.setTelecomStatus(1);
+		resmsMapper.insert(resms);
+//		int[] arr=new int[1];
+//		System.out.println(arr[2]);
+		return "success";
+		
+	}
 
 }
