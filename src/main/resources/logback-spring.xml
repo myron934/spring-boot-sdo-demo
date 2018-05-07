@@ -20,7 +20,7 @@
             <file>d:/dev/all.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 文件名称 -->
-                <fileNamePattern>all.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>d:/dev/all.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 文件最大保存历史数量 -->
                 <MaxHistory>5</MaxHistory>
             </rollingPolicy>
@@ -43,12 +43,31 @@
             </layout>
         </appender>
         
+        <!-- 每天产生一个文件 -->
+        <appender name="request" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>d:/dev/request.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- 文件名称 -->
+                <fileNamePattern>request.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <!-- 文件最大保存历史数量 -->
+                <MaxHistory>5</MaxHistory>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
+        </appender>
+        
         <root level="info">
             <appender-ref ref="console" />
             <appender-ref ref="all" />
         </root>
-        <logger name="com.sdo.controller" level="debug" additivity="false">
+        <logger name="com.sdo.controller" level="debug" additivity="true">
             <appender-ref ref="controller"/>
+        </logger>
+        
+        <logger name="request" level="debug" additivity="true">
+            <appender-ref ref="request"/>
         </logger>
     </springProfile>
     

@@ -2,6 +2,8 @@ package com.sdo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sdo.annotation.RequestLog;
 import com.sdo.entity.ResmsEntity;
 import com.sdo.mapper.global.ResmsMapper;
 
 @RestController
 @RequestMapping(value="user")
+
 public class LoginController {
 	@Autowired
 	ResmsMapper resmsMapper;
@@ -23,8 +27,16 @@ public class LoginController {
 	
 	@RequestMapping(value="/login", produces = "application/json;charset=UTF-8")
     public String login(@RequestParam("userId") String userId) {
-        return "{\"msg\":\"success\"}";
+        return "{\"msg\":\"成功了\"}";
     }
+	@RequestMapping(value="/login2", produces = "application/json;charset=UTF-8")
+	@RequestLog(forbidden="true")
+	public String login2(HttpServletRequest request) {
+//		request.getLocalAddr();
+		logger.info((String)request.getParameter("userId"));
+		logger.info(request.getServerName());
+		return request.getLocalAddr();
+	}
 	
 	@RequestMapping(value="/logout", method={ RequestMethod.GET,RequestMethod.POST })
     public String logout(@RequestParam("userId") String userId) {
